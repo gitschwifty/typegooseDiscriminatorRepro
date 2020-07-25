@@ -1,13 +1,19 @@
 {
   "name": "typegoosediscriminatorrepro",
   "version": "1.0.0",
-  "description": "Minimum repro for typegoose discriminator issue",
+  "description": "Minimum repro for typegoose discriminator issue, es6 works, es5 does not",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildAndRun": "tsc && node index.js",
+    "es5": "node es5.js",
+    "es6": "node es6.js"
   },
-  "author": "",
-  "repository": {},
+  "author": "gitschwifty",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:gitschwifty/typegooseDiscriminatorRepro.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "@types/mongoose": "^5.7.32",

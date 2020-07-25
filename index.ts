@@ -1,15 +1,23 @@
-import { modelOptions, prop, getModelForClass } from '@typegoose/typegoose';
+import { modelOptions, prop, getModelForClass, buildSchema } from '@typegoose/typegoose';
+
+enum BuildingTypes {
+    Garage = 'Garage',
+    SummerHouse = 'SummerHouse'
+};
+
 @modelOptions({
     schemaOptions: {
-      discriminatorKey: 'type'
+      discriminatorKey: 'type',
+      strict: 'throw',
+      _id: false
     }
   })
   class Building {
     @prop({ default: 100 })
     public width?: number;
   
-    @prop({ required: true })
-    public type!: string;
+    @prop({ required: true, enum: BuildingTypes })
+    public type!: BuildingTypes;
   }
   
   class Garage extends Building {
@@ -23,9 +31,9 @@ import { modelOptions, prop, getModelForClass } from '@typegoose/typegoose';
   }
   
   class Area {
-    @prop({ type: Building, discriminators: () => [Garage, SummerHouse] })
-    public buildings?: Building[];
+    @prop({ type: Building, discriminators: () => [Garage, SummerHouse], required: true })
+    public buildings!: Building[];
   }
   
   const AreaModel = getModelForClass(Area);
-  console.log(AreaModel);
+  console.log(buildSchema(Area));
